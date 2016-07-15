@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         mShoppingListView = (ListView)findViewById(R.id.shopping_list_view);
         mHelper = ShoppingSQLiteOpenHelper.getInstance(MainActivity.this);
+        mHelper.updateTableWithItemNum();
 
         final Cursor cursor = mHelper.getShoppingList();
 

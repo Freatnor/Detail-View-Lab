@@ -82,8 +82,9 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
         return returnId;
     }
 
-    public static void updateTableWithItemNum(){
-
+    public void updateTableWithItemNum(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.rawQuery("ALTER TABLE " + SHOPPING_LIST_TABLE_NAME + " ADD " + COL_ITEM_NUM + " INT", null);
     }
 
     public Cursor getShoppingList(){
