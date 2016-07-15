@@ -33,12 +33,22 @@ public class MainActivity extends AppCompatActivity {
         dbSetup.getReadableDatabase();
 
         mShoppingListView = (ListView)findViewById(R.id.shopping_list_view);
-        mHelper = new ShoppingSQLiteOpenHelper(MainActivity.this);
+        mHelper = ShoppingSQLiteOpenHelper.getInstance(MainActivity.this);
 
-        Cursor cursor = mHelper.getShoppingList();
+        final Cursor cursor = mHelper.getShoppingList();
 
         mCursorAdapter = new SimpleCursorAdapter(this,android.R.layout.simple_list_item_1,cursor,new String[]{ShoppingSQLiteOpenHelper.COL_ITEM_NAME},new int[]{android.R.id.text1},0);
         mShoppingListView.setAdapter(mCursorAdapter);
+        mShoppingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                cursor.moveToPosition(position);
+                intent.putExtra(mHelper.COL_ID, cursor.getInt(cursor.getColumnIndex(mHelper.COL_ID)));
+                cursor.close();
+                startActivity(intent);
+            }
+        });
 
         handleIntent(getIntent());
     }
