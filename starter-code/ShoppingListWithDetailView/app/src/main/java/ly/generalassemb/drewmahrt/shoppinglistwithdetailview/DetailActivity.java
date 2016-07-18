@@ -42,6 +42,7 @@ public class DetailActivity extends AppCompatActivity {
             itemType.setText(cursor.getString(cursor.getColumnIndex(helper.COL_ITEM_TYPE)));
             itemNum.setText(cursor.getString(cursor.getColumnIndex(helper.COL_ITEM_NUM)));
         }
+
         cursor.close();
     }
 }

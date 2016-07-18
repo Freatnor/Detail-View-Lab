@@ -83,8 +83,22 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
     }
 
     public void updateTableWithItemNum(){
+        boolean columnExists = false;
+        SQLiteDatabase checkDb = getReadableDatabase();
+        Cursor cursor = checkDb.query(SHOPPING_LIST_TABLE_NAME, null, null, null, null, null, null, "1");
+        if(cursor.getColumnIndexOrThrow(COL_ITEM_NUM) != -1){
+            columnExists = true;
+        }
+        cursor.close();
+        checkDb.close();
         SQLiteDatabase db = getWritableDatabase();
-        db.rawQuery("ALTER TABLE " + SHOPPING_LIST_TABLE_NAME + " ADD " + COL_ITEM_NUM + " INT", null);
+        if(!columnExists) {
+            db.execSQL("ALTER TABLE " + SHOPPING_LIST_TABLE_NAME + " ADD " + COL_ITEM_NUM + " INT");
+        }
+        ContentValues values = new ContentValues();
+        values.put(COL_ITEM_NUM, 0);
+        db.updateWithOnConflict(SHOPPING_LIST_TABLE_NAME, values, null, null, SQLiteDatabase.CONFLICT_REPLACE);
+        db.close();
     }
 
     public Cursor getShoppingList(){

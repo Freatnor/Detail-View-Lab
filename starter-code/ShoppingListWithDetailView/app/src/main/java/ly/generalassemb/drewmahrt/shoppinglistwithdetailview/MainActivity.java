@@ -46,40 +46,39 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                 cursor.moveToPosition(position);
                 intent.putExtra(mHelper.COL_ID, cursor.getInt(cursor.getColumnIndex(mHelper.COL_ID)));
-                cursor.close();
                 startActivity(intent);
             }
         });
 
-        handleIntent(getIntent());
+//        handleIntent(getIntent());
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.options_menu, menu);
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.options_menu, menu);
+//
+//        // Associate searchable configuration with the SearchView
+//        SearchManager searchManager =
+//                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView =
+//                (SearchView) menu.findItem(R.id.search).getActionView();
+//        searchView.setSearchableInfo(
+//                searchManager.getSearchableInfo(getComponentName()));
+//
+//        return true;
+//    }
 
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-
-        return true;
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            Cursor cursor = mHelper.searchShoppingList(query);
-            mCursorAdapter.changeCursor(cursor);
-            mCursorAdapter.notifyDataSetChanged();
-        }
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        handleIntent(intent);
+//    }
+//
+//    private void handleIntent(Intent intent) {
+//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+//            String query = intent.getStringExtra(SearchManager.QUERY);
+//            Cursor cursor = mHelper.searchShoppingList(query);
+//            mCursorAdapter.changeCursor(cursor);
+//            mCursorAdapter.notifyDataSetChanged();
+//        }
+//    }
 }
